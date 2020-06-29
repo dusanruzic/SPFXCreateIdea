@@ -106,6 +106,47 @@ export class SharePointServiceManager {
             return Promise.reject(error);
         });
     }
+
+    public returnNumberOfFiles() {
+        return (<HTMLInputElement>document.getElementById('txtAttachements')).files!.length;
+    }
+
+    public uploadPicture(num) {
+        let files = (<HTMLInputElement>document.getElementById('txtAttachements')).files;
+        //let file = files![0];
+        console.log('broj slika:' + files!.length);
+        for (let i =0; i< files!.length; i++) {
+            console.log(`idemo ${num+1} sliku`)
+            console.log('prikaz files tog');
+            console.log(files![num]);
+            if (files![num] != undefined || files![num] != null){
+
+                return this.context.spHttpClient.post(`${this.context.pageContext.web.absoluteUrl}/_api/lists/getbyid('${this.ideaListID}')/items('${this.newListItemId}')/AttachmentFiles/add(FileName='${files![num].name}')`, SPHttpClient.configurations.v1,
+                {
+                    headers: {
+                        'Accept': 'application/json;odata=nometadata',
+                        'Content-type': 'application/json;odata=verbose',
+                        'odata-version': ''
+                    },
+                    body: files![num]
+                })
+                .then(
+                    response => {
+                        console.log('uspeo sa slikom!');
+                        return response.json()
+                    }
+                )
+                .catch(error => {
+                    console.log('greska');
+                    return Promise.reject(error);
+                    
+                });
+            }
+        }
+        
+
+
+    }
      
     
 

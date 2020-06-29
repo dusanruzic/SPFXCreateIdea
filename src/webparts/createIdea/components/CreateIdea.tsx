@@ -113,6 +113,10 @@ export default class CreateIdea extends React.Component<ICreateIdeaProps, ICreat
       <Label htmlFor='desc' required>Idea description</Label>
       <TextField id='desc' value={this.state.desc} onChange={evt => this.changeDesc(evt)}/>
 
+      <Label htmlFor='txtAttachements' required>Upload pictures</Label>
+
+      <input id='txtAttachements' type= "file" multiple/>
+
         <div style={{marginTop:'5px'}}>
         <div style={{width:'30%', float:'left'}}>
           <button className={styles.accordion} onClick={evt =>this.chg(evt)}>Subscript & Superscript</button>
@@ -1005,6 +1009,14 @@ export default class CreateIdea extends React.Component<ICreateIdeaProps, ICreat
         SharePointService.newListItemId = result.ID;
 
         alert(`Novokreirani item ID: ${result.ID}`);
+        let num = SharePointService.returnNumberOfFiles();
+        
+        for(let i =0 ; i< num; i++) {
+          SharePointService.uploadPicture(i)!.then(res => {
+            console.log(res);
+          })
+        }
+        
       });
 
       var resu: Promise<string> = PageModelHelper.createCustomPage(this.state.name, this.state.optionSelected);
