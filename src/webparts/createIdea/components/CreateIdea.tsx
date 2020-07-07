@@ -36,6 +36,9 @@ export default class CreateIdea extends React.Component<ICreateIdeaProps, ICreat
     this.handleChange = this.handleChange.bind(this);
     this.promenaGlavnog = this.promenaGlavnog.bind(this);
 
+    this.space = this.space.bind(this);
+    this.newline = this.newline.bind(this);
+
     this.superscript = this.superscript.bind(this); 
     this.subscript = this.subscript.bind(this);
     this.superscriptSubscript = this.superscriptSubscript.bind(this);
@@ -119,6 +122,11 @@ export default class CreateIdea extends React.Component<ICreateIdeaProps, ICreat
 
         <div style={{marginTop:'5px'}}>
         <div style={{width:'30%', float:'left'}}>
+        <button className={styles.accordion} onClick={evt =>this.chg(evt)}>Commands</button>
+          <div className={styles.panel}>
+            <button onClick={this.space}>Space</button>
+            <button onClick={this.newline}>Newline</button>
+          </div> 
           <button className={styles.accordion} onClick={evt =>this.chg(evt)}>Subscript & Superscript</button>
           <div className={styles.panel}>
             <button onClick={this.superscript}>a<sup>x</sup></button>
@@ -214,6 +222,7 @@ export default class CreateIdea extends React.Component<ICreateIdeaProps, ICreat
             Textual formula:
           </h3>
           
+        {/*
         <input
           type="text"
           style={{width:'100%'}}
@@ -222,6 +231,11 @@ export default class CreateIdea extends React.Component<ICreateIdeaProps, ICreat
           onChange={this.promenaGlavnog}
           //placeholder='Here you put whole formula'
         />
+        */}
+
+        <TextField id='name' value={this.state.formula} multiline
+          placeholder="Enter formula here directly or use left helpbar with predefined elements"
+          onChange={this.promenaGlavnog}/>
 
 
           <h3 style={{textAlign: 'center' }}>
@@ -244,8 +258,36 @@ export default class CreateIdea extends React.Component<ICreateIdeaProps, ICreat
     );
   }
 
+  public space() {
+    let val = '\\ ';
+      let form = this.state.formula + val;
+      let mathjax = '$$'+ form + '$$';
+  
+      this.setState({
+        value: val,
+        formula: form,
+        formulaMathjax: mathjax
+        
+      });
+  
+  }
+
+  public newline() {
+    let val = '\\\\';
+      let form = this.state.formula + val;
+      let mathjax = '$$'+ form + '$$';
+  
+      this.setState({
+        value: val,
+        formula: form,
+        formulaMathjax: mathjax
+        
+      });
+  
+  }
+
   public superscript() {
-    console.log(this.state.formula);
+    //console.log(this.state.formula);
     let base = prompt("Please enter base number", "Base number");
     var exp = prompt("Please enter exponent number", "Exponent number");
     let val = '{' + base + '}^{' + exp + '}';
@@ -262,7 +304,7 @@ export default class CreateIdea extends React.Component<ICreateIdeaProps, ICreat
   }
 
   public subscript() {
-    console.log(this.state.formula);
+    //console.log(this.state.formula);
     let base = prompt("Please enter base number", "Base number");
     var index = prompt("Please enter index number", "Index number");
 
@@ -280,7 +322,7 @@ export default class CreateIdea extends React.Component<ICreateIdeaProps, ICreat
   }
 
   public superscriptSubscript() {
-    console.log(this.state.formula);
+    //console.log(this.state.formula);
     let base = prompt("Please enter base number", "Base number");
     var index = prompt("Please enter index number", "Index number");
     var exp = prompt("Please enter exponent number", "Exponent number");
@@ -299,7 +341,7 @@ export default class CreateIdea extends React.Component<ICreateIdeaProps, ICreat
   }
 
   public sum() {
-    console.log(this.state.formula);
+    //console.log(this.state.formula);
     let base = prompt("Please enter starting value for i", "Start value");
     var exp = prompt("Please enter end value for i", "End value");
     var stat = prompt("Please enter statement within sum", "Statement within sum");
@@ -316,7 +358,7 @@ export default class CreateIdea extends React.Component<ICreateIdeaProps, ICreat
   }
 
   public doubleSum() {
-    console.log(this.state.formula);
+    //console.log(this.state.formula);
     let base1 = prompt("Please enter starting value for i", "Start value");
     var exp1 = prompt("Please enter end value for i", "End value");
     let base2 = prompt("Please enter starting value for j", "Start value");
@@ -335,7 +377,7 @@ export default class CreateIdea extends React.Component<ICreateIdeaProps, ICreat
   }
 
   public fraction() {
-    console.log(this.state.formula);
+    //console.log(this.state.formula);
     let numerator = prompt("Please enter numerator", "Numerator");
     var denominator = prompt("Please enter denominator", "Denominator");
 
@@ -353,7 +395,7 @@ export default class CreateIdea extends React.Component<ICreateIdeaProps, ICreat
   }
 
   public definiteIntegral() {
-    console.log(this.state.formula);
+    //console.log(this.state.formula);
     let lower = prompt("Please enter lower limit of the integral", "Lower limit");
     var upper = prompt("Please enter upper limit of the integral", "Upper limit");
     var func = prompt("Please enter value within the integral", "Value within the integral");
@@ -372,7 +414,7 @@ export default class CreateIdea extends React.Component<ICreateIdeaProps, ICreat
   }
 
   public contourIntegral() {
-    console.log(this.state.formula);
+    //console.log(this.state.formula);
     var func = prompt("Please enter value within the integral", "Value within the contour integral");
 
     let val = '\\oint(' +func + ')dx';
@@ -389,7 +431,7 @@ export default class CreateIdea extends React.Component<ICreateIdeaProps, ICreat
   }
 
   public doubleIntegral() {
-    console.log(this.state.formula);
+    //console.log(this.state.formula);
     let lower = prompt("Please enter lower limit of the inner integral", "Lower limit of inner integral");
     var upper = prompt("Please enter upper limit of the inner integral", "Upper limit of inner integral");
     var func = prompt("Please enter value within the inner integral", "Value within the inner integral");
@@ -408,7 +450,7 @@ export default class CreateIdea extends React.Component<ICreateIdeaProps, ICreat
   }
 
   public partialDifferential() {
-    console.log(this.state.formula);
+    //console.log(this.state.formula);
     let numerator = prompt("Please enter differential's numerator", "Differential's numerator");
     var denominator = prompt("Please enter differential's denominator", "Differential's denominator");
 
@@ -426,7 +468,7 @@ export default class CreateIdea extends React.Component<ICreateIdeaProps, ICreat
   }
 
   public firstAccent() {
-    console.log(this.state.formula);
+    //console.log(this.state.formula);
     let base = prompt("Please enter function value within the accent", "Function value within the accent");
 
     let val = '\\dot{(' + base + ')}';
@@ -443,7 +485,7 @@ export default class CreateIdea extends React.Component<ICreateIdeaProps, ICreat
   }
 
   public secondAccent() {
-    console.log(this.state.formula);
+    //console.log(this.state.formula);
     let base = prompt("Please enter function value within the accent", "Function value within the accent");
 
     let val = '\\ddot{(' + base + ')}';
@@ -460,7 +502,7 @@ export default class CreateIdea extends React.Component<ICreateIdeaProps, ICreat
   }
 
   public thirdAccent() {
-    console.log(this.state.formula);
+    //console.log(this.state.formula);
     let base = prompt("Please enter function value within the accent", "Function value within the accent");
 
     let val = '\\dddot{(' + base + ')}';
@@ -477,7 +519,7 @@ export default class CreateIdea extends React.Component<ICreateIdeaProps, ICreat
   }
 
   public radical() {
-    console.log(this.state.formula);
+    //console.log(this.state.formula);
     let base = prompt("Please choose type of radical", "Enter numeric value for type of radical");
     let func = prompt("Please type value which will be under the radical", "Value under the radical");
 
@@ -495,7 +537,7 @@ export default class CreateIdea extends React.Component<ICreateIdeaProps, ICreat
   }
   
   public vector() {
-    console.log(this.state.formula);
+    //console.log(this.state.formula);
     let num= prompt("Please enter number of elements for vector", "")!;
 
     let numOfElements = parseInt(num);
@@ -507,13 +549,13 @@ export default class CreateIdea extends React.Component<ICreateIdeaProps, ICreat
         arr.push(a);
       }
 
-      console.log(arr);
+      //console.log(arr);
       let finalStr = '';
       for (let j = 0; j<arr.length; j++ ){
         finalStr = finalStr + arr[j] + '\\\\';
       }
 
-      console.log(finalStr);
+      //console.log(finalStr);
 
       let val = '\\begin{pmatrix}' + finalStr + '\\end{pmatrix}';
       let form = this.state.formula + val;
@@ -530,7 +572,7 @@ export default class CreateIdea extends React.Component<ICreateIdeaProps, ICreat
 
     
   public matrix() {
-    console.log(this.state.formula);
+    //console.log(this.state.formula);
     let columns= parseInt(prompt("Please choose number of matrix's columns", "")!);
     let rows= parseInt(prompt("Please choose number of matrix's rows", "")!);
 
@@ -554,7 +596,7 @@ export default class CreateIdea extends React.Component<ICreateIdeaProps, ICreat
 
       }
 
-      console.log(finalStr);
+      //console.log(finalStr);
 
       let val = '\\begin{bmatrix}' + finalStr + '\\end{bmatrix}';
       let form = this.state.formula + val;
@@ -884,7 +926,7 @@ export default class CreateIdea extends React.Component<ICreateIdeaProps, ICreat
     }
 
     public sqr_sqrt() {
-      console.log(this.state.formula);
+      //console.log(this.state.formula);
       let func = prompt('Please enter the function', "Function");
       let numerator = prompt("Please enter number for sqr", "Sqr");
       var denominator = prompt("Please enter number for sqrt", "Sqrt");
@@ -903,7 +945,7 @@ export default class CreateIdea extends React.Component<ICreateIdeaProps, ICreat
     }
 
     public sinx() {
-      console.log(this.state.formula);
+      //console.log(this.state.formula);
       let base = prompt("Please enter function value within the sin", "Function value within the sin");
   
       let val = '\\sin{(' + base + ')}';
@@ -920,7 +962,7 @@ export default class CreateIdea extends React.Component<ICreateIdeaProps, ICreat
     }
 
     public cosx() {
-      console.log(this.state.formula);
+      //console.log(this.state.formula);
       let base = prompt("Please enter function value within the cos", "Function value within the cos");
   
       let val = '\\cos{(' + base + ')}';
@@ -937,7 +979,7 @@ export default class CreateIdea extends React.Component<ICreateIdeaProps, ICreat
     }
 
     public tgx() {
-      console.log(this.state.formula);
+      //console.log(this.state.formula);
       let base = prompt("Please enter function value within the tan", "Function value within the tan");
   
       let val = '\\tan{(' + base + ')}';
@@ -958,7 +1000,7 @@ export default class CreateIdea extends React.Component<ICreateIdeaProps, ICreat
 
   public handleChange(event) {
     this.setState({formula: event.target.value});
-    console.log('promenio se');
+    //console.log('promenio se');
 
     let mathjax = '$$'+ this.state.formula + '$$';
 
@@ -984,8 +1026,8 @@ export default class CreateIdea extends React.Component<ICreateIdeaProps, ICreat
   }
 
   public chg(evt) {
-    console.log('kliknuo prvi!')
-    console.log(evt.target);
+    //console.log('kliknuo prvi!')
+    //console.log(evt.target);
     var panel = evt.target.nextElementSibling;
     if (panel.style.maxHeight) {
       panel.style.maxHeight = null;
@@ -997,32 +1039,35 @@ export default class CreateIdea extends React.Component<ICreateIdeaProps, ICreat
 
   public submitNewIdea() {
     if(this.state.name == '' || this.state.desc == ''){
-      console.log('dopuni');
-      console.log(this.state.name);                                         
+      //console.log('dopuni');
+      //console.log(this.state.name);                                         
     }
     else {
-      console.log('prihvatio');
-      console.log('Name:' + this.state.name);
-      console.log('Desc:' + this.state.desc);
+      //console.log('prihvatio');
+      //console.log('Name:' + this.state.name);
+      //console.log('Desc:' + this.state.desc);
       SharePointService.createIdea(this.state.name, this.state.desc, this.state.formula).then (result => {
-        console.log(result);
+        //console.log(result);
         SharePointService.newListItemId = result.ID;
 
-        alert(`Novokreirani item ID: ${result.ID}`);
+        //alert(`Novokreirani item ID: ${result.ID}`);
         let num = SharePointService.returnNumberOfFiles();
-        
+        //console.log(SharePointService.context.pageContext.web.absoluteUrl);
+
         for(let i =0 ; i< num; i++) {
           SharePointService.uploadPicture(i)!.then(res => {
-            console.log(res);
+            //console.log(res);
           })
         }
+
+        var resu: Promise<string> = PageModelHelper.createCustomPage(this.state.name, SharePointService.newListItemId, this.state.optionSelected);
+        resu.then(ss => {
+          //console.log(ss);
+          window.location.href = `${SharePointService.context.pageContext.web.absoluteUrl}/SitePages/All-ideas.aspx`;
+        });
         
       });
 
-      var resu: Promise<string> = PageModelHelper.createCustomPage(this.state.name, this.state.optionSelected);
-    resu.then(ss => {
-      console.log(ss);
-    });
 
 
     }

@@ -27,32 +27,34 @@ export class PageModelHelper {
   }
   */
 
-  public static async createCustomPage(pagename: string, pageType: string): Promise<string> {
+  public static async createCustomPage(name: string, pagename: number, pageType: string): Promise<string> {
     
-    const page = await sp.web.addClientsidePage(pagename + ".aspx");
-    console.log("pagetype" + pageType);
+    const page = await sp.web.addClientsidePage("idea" + pagename + ".aspx");
+    //console.log("pagetype" + pageType);
+    page.title = name;
 
     const partDefs = await sp.web.getClientsideWebParts();
-    console.log("case a");
+    //console.log("case a");
     const section = page.addSection();
-    console.log("section added");
+    //console.log("section added");
 
     const column1 = section.addColumn(12);
 
     // find the definition we want, here by id
     const partDef = partDefs.filter(c => c.Id.toUpperCase() === "{99d66d2e-e67d-42f6-9685-651bb4f61fec}".toUpperCase());
-    console.log(partDefs);
+    //console.log(partDefs);
     // optionally ensure you found the def
     if (partDef.length < 1) {
         // we didn't find it so we throw an error
-        console.log('ops');
+        //console.log('ops');
         throw new Error("Could not find the web part");
     }
     // create a ClientWebPart instance from the definition
     const part = ClientsideWebpart.fromComponentDef(partDef[0]);
 
     part.setProperties<MyClientSideWebpartPropertyTypes.People>({
-        layout: "2",
+        layout: "1",
+        /*
         persons: [
             {
                 "id": "i:0#.f|membership|vukasin@jvspdev.onmicrosoft.com",
@@ -63,13 +65,15 @@ export class PageModelHelper {
                 "sip": ""
             }
         ],
-        description: SharePointService.newListItemId + ''
+        */
+        description: SharePointService.newListItemId + '',
+        
     });
     // add a text control to the second new column
     column1.addControl(part);
 
     await page.save();
-    console.log("case saved");
+    //console.log("case saved");
 
 
     return await "done";

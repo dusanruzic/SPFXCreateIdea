@@ -21,7 +21,7 @@ export class SharePointServiceManager {
     }
 
     public get(relativeEndpointUrl: string): Promise<any> {
-        console.log(`${this.context.pageContext.web.absoluteUrl}${relativeEndpointUrl}`);
+        //console.log(`${this.context.pageContext.web.absoluteUrl}${relativeEndpointUrl}`);
         return this.context.spHttpClient.get(`${this.context.pageContext.web.absoluteUrl}${relativeEndpointUrl}`, SPHttpClient.configurations.v1)
         .then(
             response => {
@@ -52,7 +52,7 @@ export class SharePointServiceManager {
     }
 
     public getListItemsFIltered(listId: string, filterString: string) : Promise<IListItemCollection>{
-        console.log(`/_api/lists/getbyid('${listId}')/items?$filter=IdeaStatus eq '${filterString}'`);
+        //console.log(`/_api/lists/getbyid('${listId}')/items?$filter=IdeaStatus eq '${filterString}'`);
         return this.get(`/_api/lists/getbyid('${listId}')/items?$select=*,Author/Name,Author/Title&$expand=Author/Id,AttachmentFiles&$filter=ElSpecStatus eq '${filterString}'`);
     }
     
@@ -84,10 +84,10 @@ export class SharePointServiceManager {
             'Comment1': desc,
             'IdeaFormula': formula
         })
-        console.log(name);
-        console.log(desc);
-        console.log(formula);
-        console.log(this.context.pageContext.web.absoluteUrl);
+        //console.log(name);
+        //console.log(desc);
+        //console.log(formula);
+        //console.log(this.context.pageContext.web.absoluteUrl);
         return this.context.spHttpClient.post(`${this.context.pageContext.web.absoluteUrl}/_api/lists/getbyid('${this.ideaListID}')/items`, SPHttpClient.configurations.v1,
         {
             headers: {
@@ -114,11 +114,11 @@ export class SharePointServiceManager {
     public uploadPicture(num) {
         let files = (<HTMLInputElement>document.getElementById('txtAttachements')).files;
         //let file = files![0];
-        console.log('broj slika:' + files!.length);
+        //console.log('broj slika:' + files!.length);
         for (let i =0; i< files!.length; i++) {
-            console.log(`idemo ${num+1} sliku`)
-            console.log('prikaz files tog');
-            console.log(files![num]);
+            //console.log(`idemo ${num+1} sliku`)
+            //console.log('prikaz files tog');
+            //console.log(files![num]);
             if (files![num] != undefined || files![num] != null){
 
                 return this.context.spHttpClient.post(`${this.context.pageContext.web.absoluteUrl}/_api/lists/getbyid('${this.ideaListID}')/items('${this.newListItemId}')/AttachmentFiles/add(FileName='${files![num].name}')`, SPHttpClient.configurations.v1,
@@ -132,12 +132,12 @@ export class SharePointServiceManager {
                 })
                 .then(
                     response => {
-                        console.log('uspeo sa slikom!');
+                        //console.log('uspeo sa slikom!');
                         return response.json()
                     }
                 )
                 .catch(error => {
-                    console.log('greska');
+                    //console.log('greska');
                     return Promise.reject(error);
                     
                 });
