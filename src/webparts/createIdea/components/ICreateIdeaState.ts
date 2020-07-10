@@ -7,5 +7,7 @@ export interface ICreateIdeaState {
   desc: string;
   newPageName: string;
   optionSelected: string;
+  is_creating: boolean;
+  has_error: boolean
 
 }
