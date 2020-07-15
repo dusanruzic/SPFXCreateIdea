@@ -38,27 +38,27 @@ export class SharePointServiceManager {
     }
 
     public getListItems(listId: string, selectedFields?: string[]) : Promise<IListItemCollection>{
-        return this.get(`/_api/lists/getbyid('${listId}')/items?$select=*,Author/Name,Author/Title&$expand=Author/Id,AttachmentFiles`);
+        return this.get(`/_api/lists/getbytitle('${listId}')/items?$select=*,Author/Name,Author/Title&$expand=Author/Id,AttachmentFiles`);
     }
 
     public getListItem(listId: string, itemId: number){
-        return this.get(`/_api/lists/getbyid('${listId}')/items(${itemId})?$select=*,Author/Name,Author/Title,LinkToIdea/Title&$expand=Author/Id,LinkToIdea/Id,AttachmentFiles`);
+        return this.get(`/_api/lists/getbytitle('${listId}')/items(${itemId})?$select=*,Author/Name,Author/Title,LinkToIdea/Title&$expand=Author/Id,LinkToIdea/Id,AttachmentFiles`);
     }
 
     public getListItemVersions(listId: string, itemId: number){
         //return this.get(`/_api/lists/getbyid('${listId}')/items(${itemId})/versions?$select=*,Author/Name,Author/Title,LinkToSpec/Title&$expand=Author/Id,LinkToSpec/Id,AttachmentFiles`);
-        return this.get(`/_api/lists/getbyid('${listId}')/items(${itemId})/versions?$select=*,Author/Name,Author/Title,LinkToIdea/Title&$expand=Author/Id,LinkToIdea/Id,AttachmentFiles`);
+        return this.get(`/_api/lists/getbytitle('${listId}')/items(${itemId})/versions?$select=*,Author/Name,Author/Title,LinkToIdea/Title&$expand=Author/Id,LinkToIdea/Id,AttachmentFiles`);
 
     }
 
     public getListItemsFIltered(listId: string, filterString: string) : Promise<IListItemCollection>{
         //console.log(`/_api/lists/getbyid('${listId}')/items?$filter=IdeaStatus eq '${filterString}'`);
-        return this.get(`/_api/lists/getbyid('${listId}')/items?$select=*,Author/Name,Author/Title&$expand=Author/Id,AttachmentFiles&$filter=ElSpecStatus eq '${filterString}'`);
+        return this.get(`/_api/lists/getbytitle('${listId}')/items?$select=*,Author/Name,Author/Title&$expand=Author/Id,AttachmentFiles&$filter=ElSpecStatus eq '${filterString}'`);
     }
     
 
     public getListFields(listId: string, showHiddenField: boolean = false): Promise<IListFieldCollection>{
-        return this.get(`/_api/lists/getbyid('${listId}')/fields${!showHiddenField ? '?$filter=Hidden eq false' : ''}`);
+        return this.get(`/_api/lists/getbytitle('${listId}')/fields${!showHiddenField ? '?$filter=Hidden eq false' : ''}`);
         
     }
 
@@ -88,7 +88,7 @@ export class SharePointServiceManager {
         //console.log(desc);
         //console.log(formula);
         //console.log(this.context.pageContext.web.absoluteUrl);
-        return this.context.spHttpClient.post(`${this.context.pageContext.web.absoluteUrl}/_api/lists/getbyid('${this.ideaListID}')/items`, SPHttpClient.configurations.v1,
+        return this.context.spHttpClient.post(`${this.context.pageContext.web.absoluteUrl}/_api/lists/getbytitle('${this.ideaListID}')/items`, SPHttpClient.configurations.v1,
         {
             headers: {
                 'Accept': 'application/json;odata=nometadata',
@@ -121,7 +121,7 @@ export class SharePointServiceManager {
             //console.log(files![num]);
             if (files![num] != undefined || files![num] != null){
 
-                return this.context.spHttpClient.post(`${this.context.pageContext.web.absoluteUrl}/_api/lists/getbyid('${this.ideaListID}')/items('${this.newListItemId}')/AttachmentFiles/add(FileName='${files![num].name}')`, SPHttpClient.configurations.v1,
+                return this.context.spHttpClient.post(`${this.context.pageContext.web.absoluteUrl}/_api/lists/getbytitle('${this.ideaListID}')/items('${this.newListItemId}')/AttachmentFiles/add(FileName='${files![num].name}')`, SPHttpClient.configurations.v1,
                 {
                     headers: {
                         'Accept': 'application/json;odata=nometadata',

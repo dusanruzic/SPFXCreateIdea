@@ -37,7 +37,8 @@ export default class CreateIdeaWebPart extends BaseClientSideWebPart<ICreateIdea
 
   public onInit(): Promise<void> {
     return super.onInit().then(() =>{
-      let ideaListID = 'CF70FB14-EE3E-4D16-921A-3449856770E7';
+      //let ideaListID = 'CF70FB14-EE3E-4D16-921A-3449856770E7';
+      let ideaListID = 'Idea';
       SharePointService.setup(this.context, Environment.type, ideaListID);
       sp.setup({
         spfxContext: this.context
