@@ -45,6 +45,7 @@ export default class CreateIdea extends React.Component<ICreateIdeaProps, ICreat
 
     this.handleChange = this.handleChange.bind(this);
     this.promenaGlavnog = this.promenaGlavnog.bind(this);
+    this.proveraEntera = this.proveraEntera.bind(this);
     this.toggleHideDialog = this.toggleHideDialog.bind(this);
 
     this.space = this.space.bind(this);
@@ -128,9 +129,9 @@ export default class CreateIdea extends React.Component<ICreateIdeaProps, ICreat
       <TextField id='name' value={this.state.name} onChange={evt => this.changeName(evt)}/>
 
       <Label htmlFor='desc' required>Idea description</Label>
-      <TextField id='desc' value={this.state.desc} onChange={evt => this.changeDesc(evt)}/>
+      <TextField id='desc'  multiline value={this.state.desc} onChange={evt => this.changeDesc(evt)}/>
 
-      <Label htmlFor='txtAttachements' required>Upload pictures</Label>
+      <Label htmlFor='txtAttachements' >Upload pictures</Label>
 
       <input id='txtAttachements' type= "file" multiple/>
 
@@ -249,7 +250,7 @@ export default class CreateIdea extends React.Component<ICreateIdeaProps, ICreat
 
         <TextField id='name' value={this.state.formula} multiline
           placeholder="Enter formula here directly or use left helpbar with predefined elements"
-          onChange={this.promenaGlavnog}/>
+          onChange={this.promenaGlavnog} onKeyDown={this.proveraEntera} />
 
 
           <h3 style={{textAlign: 'center' }}>
@@ -1041,16 +1042,31 @@ export default class CreateIdea extends React.Component<ICreateIdeaProps, ICreat
   public promenaGlavnog(event) {
     let form = event.target.value;
     let formMathjax = '$$' + form + '$$';
+    
+    console.log(event);
 
     this.setState({
       formula: form,
       formulaMathjax: formMathjax
     });
 
+  }
 
-    
-    
-    
+  public proveraEntera(event) {
+    console.log('lele');
+    console.log(event);
+    if(event.keyCode === 13){
+      //pritisnut enter
+      let form = event.target.value;
+      let val = '\\\\';
+      let formval = form + val;
+      let formMathjax = '$$' + formval + '$$';
+
+      this.setState({
+        formula: formval,
+        formulaMathjax: formMathjax
+      });
+    }
   }
 
   public chg(evt) {
