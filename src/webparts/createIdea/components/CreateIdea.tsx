@@ -1043,7 +1043,7 @@ export default class CreateIdea extends React.Component<ICreateIdeaProps, ICreat
     let form = event.target.value;
     let formMathjax = '$$' + form + '$$';
     
-    console.log(event);
+    //console.log(event);
 
     this.setState({
       formula: form,
@@ -1054,7 +1054,7 @@ export default class CreateIdea extends React.Component<ICreateIdeaProps, ICreat
 
   public proveraEnterSpace(event) {
     //console.log('lele');
-    console.log(event);
+    //console.log(event);
     if(event.keyCode === 13){
       //pritisnut enter
       let form = event.target.value;
