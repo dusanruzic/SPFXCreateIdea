@@ -45,7 +45,7 @@ export default class CreateIdea extends React.Component<ICreateIdeaProps, ICreat
 
     this.handleChange = this.handleChange.bind(this);
     this.promenaGlavnog = this.promenaGlavnog.bind(this);
-    this.proveraEntera = this.proveraEntera.bind(this);
+    this.proveraEnterSpace = this.proveraEnterSpace.bind(this);
     this.toggleHideDialog = this.toggleHideDialog.bind(this);
 
     this.space = this.space.bind(this);
@@ -250,7 +250,7 @@ export default class CreateIdea extends React.Component<ICreateIdeaProps, ICreat
 
         <TextField id='name' value={this.state.formula} multiline
           placeholder="Enter formula here directly or use left helpbar with predefined elements"
-          onChange={this.promenaGlavnog} onKeyDown={this.proveraEntera} />
+          onChange={this.promenaGlavnog} onKeyDown={this.proveraEnterSpace} />
 
 
           <h3 style={{textAlign: 'center' }}>
@@ -1052,13 +1052,24 @@ export default class CreateIdea extends React.Component<ICreateIdeaProps, ICreat
 
   }
 
-  public proveraEntera(event) {
-    console.log('lele');
+  public proveraEnterSpace(event) {
+    //console.log('lele');
     console.log(event);
     if(event.keyCode === 13){
       //pritisnut enter
       let form = event.target.value;
       let val = '\\\\';
+      let formval = form + val;
+      let formMathjax = '$$' + formval + '$$';
+
+      this.setState({
+        formula: formval,
+        formulaMathjax: formMathjax
+      });
+    }
+    else if(event.keyCode === 32){
+      let form = event.target.value;
+      let val = '\\ ';
       let formval = form + val;
       let formMathjax = '$$' + formval + '$$';
 
